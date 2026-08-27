@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CVR-kontrol</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div>
+      <h1>CVR-kontrol</h1>
+      <p>Kontrollér virksomhedsstatus og momsregistrering for en hel liste ad gangen.</p>
+    </div>
+    <div class="sources" id="sources">Henter datakilder…</div>
+  </header>
+
+  <div id="providerWarnings"></div>
+
+  <section class="card" id="uploadCard">
+    <h2>1 · Upload liste</h2>
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Vælg eller træk en fil hertil">
+      <strong>Træk en fil hertil</strong>
+      <span>eller klik for at vælge · .xlsx, .xls, .csv</span>
+    </div>
+    <input type="file" id="file" accept=".xlsx,.xls,.csv" class="hidden">
+    <div id="uploadStatus" class="muted" style="margin-top:12px;font-size:13px"></div>
+  </section>
+
+  <section class="card hidden" id="mapCard">
+    <h2>2 · Vælg CVR-kolonne</h2>
+    <div id="mapHint" class="muted" style="font-size:13px;margin-bottom:12px"></div>
+    <div class="field"><label for="cvrColumn">Kolonne med CVR-numre</label><select id="cvrColumn"></select></div>
+    <div class="field"><label for="cvrProv">CVR-kilde</label><select id="cvrProv"></select></div>
+    <div class="field"><label for="vatProv">Momskilde</label><select id="vatProv"></select></div>
+    <button class="primary" id="confirmBtn">Opret kontrol</button>
+  </section>
+
+  <section class="card hidden" id="runCard">
+    <h2>3 · Kontrol</h2>
+    <div class="stats" id="stats"></div>
+    <div class="bar"><i id="barFill" style="width:0%"></i></div>
+    <div class="progress-line"><span id="progressText">0 / 0 virksomheder behandlet</span><span id="progressPct" class="muted">0 %</span></div>
+    <div class="row-actions">
+      <button class="primary" id="startBtn">Start kontrol</button>
+      <button id="pauseBtn">Sæt på pause</button>
+      <button id="retryBtn">Prøv fejlede igen</button>
+      <a class="btn" id="xlsxLink" href="#">Hent resultat (Excel)</a>
+      <a class="btn" id="zipLink" href="#">Hent alle dokumenter (ZIP)</a>
+      <a class="btn" id="auditLink" href="#">Hent auditlog</a>
+    </div>
+  </section>
+
+  <section class="card hidden" id="tableCard">
+    <h2>Behandlingsliste</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>CVR</th><th>Virksomhed</th><th>CVR-status</th><th>Moms</th>
+          <th>Spor</th><th>Dokumentation</th><th>Status</th><th>Fejl</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
